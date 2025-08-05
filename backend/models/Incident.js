@@ -91,11 +91,15 @@ incidentSchema.methods.getSummary = function() {
   return {
     id: this._id,
     title: this.title,
+    description: this.description,
     severity: this.severity,
     category: this.category,
     status: this.status,
+    location: this.location,
+    witnesses: this.witnesses,
     createdAt: this.createdAt,
-    location: this.location
+    updatedAt: this.updatedAt,
+    timestamp: this.createdAt // For compatibility with frontend
   };
 };
 

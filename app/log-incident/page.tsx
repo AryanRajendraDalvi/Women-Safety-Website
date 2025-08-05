@@ -24,11 +24,16 @@ export default function LogIncidentPage() {
   const [isRecording, setIsRecording] = useState(false)
   const [recordingTime, setRecordingTime] = useState(0)
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([])
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [showSuccess, setShowSuccess] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const router = useRouter()
   const { t } = useLanguage()
 
   const handleSave = async () => {
+    if (isSubmitting) return
+    
+    setIsSubmitting(true)
     try {
       const token = localStorage.getItem('safespace_token')
       if (!token) {
@@ -77,13 +82,36 @@ export default function LogIncidentPage() {
           }
         }
 
-        router.push('/evidence-vault')
+        // Save to localStorage for display in dashboard and evidence vault
+        const newIncident = {
+          id: data.incident.id || Date.now(),
+          title: title || `Incident Log #${Date.now()}`,
+          description,
+          location,
+          witnesses,
+          severity,
+          timestamp: new Date().toISOString(),
+          files: uploadedFiles.map(file => file.name)
+        }
+
+        const existingLogs = JSON.parse(localStorage.getItem('safespace_logs') || '[]')
+        const updatedLogs = [...existingLogs, newIncident]
+        localStorage.setItem('safespace_logs', JSON.stringify(updatedLogs))
+
+        // Show success message
+        setShowSuccess(true)
+        setTimeout(() => {
+          setShowSuccess(false)
+          router.push('/dashboard')
+        }, 2000)
       } else {
         alert(data.error || 'Failed to save incident')
       }
     } catch (error) {
       console.error('Save incident error:', error)
       alert('Failed to save incident. Please try again.')
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -355,9 +383,13 @@ export default function LogIncidentPage() {
 
             {/* Actions */}
             <div className="space-y-3">
-              <Button onClick={handleSave} className="w-full bg-purple-600 hover:bg-purple-700">
+              <Button 
+                onClick={handleSave} 
+                className="w-full bg-purple-600 hover:bg-purple-700" 
+                disabled={isSubmitting || !description.trim()}
+              >
                 <Save className="h-4 w-4 mr-2" />
-                {t("save")} Securely
+                {isSubmitting ? 'Saving...' : `${t("save")} Securely`}
               </Button>
               <Link href="/dashboard">
                 <Button variant="outline" className="w-full bg-transparent">
@@ -368,6 +400,26 @@ export default function LogIncidentPage() {
           </div>
         </div>
       </div>
+
+      {/* Success Message Overlay */}
+      {showSuccess && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-8 max-w-md mx-4 text-center">
+            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Shield className="h-8 w-8 text-green-600" />
+            </div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              Incident Submitted Successfully!
+            </h3>
+            <p className="text-gray-600 mb-4">
+              Your report has been securely saved and will appear in your dashboard.
+            </p>
+            <div className="animate-pulse text-sm text-purple-600">
+              Redirecting to dashboard...
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

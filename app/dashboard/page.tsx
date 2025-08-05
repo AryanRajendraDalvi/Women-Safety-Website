@@ -36,9 +36,45 @@ export default function DashboardPage() {
     }
     setUser(JSON.parse(userData))
 
-    // Load recent logs from localStorage
-    const logs = JSON.parse(localStorage.getItem("safespace_logs") || "[]")
-    setRecentLogs(logs.slice(-3).reverse()) // Show last 3 logs
+    const fetchRecentLogs = async () => {
+      try {
+        const token = localStorage.getItem('safespace_token')
+        if (!token) return
+
+        // Fetch incidents from backend
+        const response = await fetch('/api/incidents', {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        })
+
+        if (response.ok) {
+          const backendIncidents = await response.json()
+          
+          // Get localStorage incidents
+          const localLogs = JSON.parse(localStorage.getItem("safespace_logs") || "[]")
+          
+          // Merge and deduplicate incidents (backend takes priority)
+          const mergedIncidents = [...backendIncidents.incidents || [], ...localLogs]
+          const uniqueIncidents = mergedIncidents.filter((incident, index, self) => 
+            index === self.findIndex(i => i.id === incident.id)
+          )
+          
+          setRecentLogs(uniqueIncidents.slice(-3).reverse()) // Show last 3 logs
+        } else {
+          // Fallback to localStorage only
+          const logs = JSON.parse(localStorage.getItem("safespace_logs") || "[]")
+          setRecentLogs(logs.slice(-3).reverse())
+        }
+      } catch (error) {
+        console.error('Error fetching incidents:', error)
+        // Fallback to localStorage only
+        const logs = JSON.parse(localStorage.getItem("safespace_logs") || "[]")
+        setRecentLogs(logs.slice(-3).reverse())
+      }
+    }
+
+    fetchRecentLogs()
   }, [router])
 
   const handleLogout = async () => {

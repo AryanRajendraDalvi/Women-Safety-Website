@@ -9,6 +9,7 @@ import { Shield, ArrowLeft, Search, Calendar, FileText, Trash2, Eye, Download, S
 import Link from "next/link"
 import { useLanguage } from "@/components/LanguageProvider"
 import { HomeButton } from "@/components/HomeButton"
+import { useRouter } from "next/navigation"
 
 export default function EvidenceVaultPage() {
   const [logs, setLogs] = useState<any[]>([])
@@ -17,11 +18,52 @@ export default function EvidenceVaultPage() {
   const [selectedLog, setSelectedLog] = useState<any>(null)
 
   const { t } = useLanguage()
+  const router = useRouter()
 
   useEffect(() => {
-    const savedLogs = JSON.parse(localStorage.getItem("safespace_logs") || "[]")
-    setLogs(savedLogs.reverse()) // Show newest first
-  }, [])
+    const fetchIncidents = async () => {
+      try {
+        const token = localStorage.getItem('safespace_token')
+        if (!token) {
+          router.push('/login')
+          return
+        }
+
+        // Fetch incidents from backend
+        const response = await fetch('/api/incidents', {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        })
+
+        if (response.ok) {
+          const backendIncidents = await response.json()
+          
+          // Get localStorage incidents
+          const localLogs = JSON.parse(localStorage.getItem("safespace_logs") || "[]")
+          
+          // Merge and deduplicate incidents (backend takes priority)
+          const mergedIncidents = [...backendIncidents.incidents || [], ...localLogs]
+          const uniqueIncidents = mergedIncidents.filter((incident, index, self) => 
+            index === self.findIndex(i => i.id === incident.id)
+          )
+          
+          setLogs(uniqueIncidents.reverse()) // Show newest first
+        } else {
+          // Fallback to localStorage only
+          const savedLogs = JSON.parse(localStorage.getItem("safespace_logs") || "[]")
+          setLogs(savedLogs.reverse())
+        }
+      } catch (error) {
+        console.error('Error fetching incidents:', error)
+        // Fallback to localStorage only
+        const savedLogs = JSON.parse(localStorage.getItem("safespace_logs") || "[]")
+        setLogs(savedLogs.reverse())
+      }
+    }
+
+    fetchIncidents()
+  }, [router])
 
   const filteredLogs = logs.filter((log) => {
     const matchesSearch =
