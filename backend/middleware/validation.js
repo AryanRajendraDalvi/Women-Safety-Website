@@ -72,6 +72,16 @@ const validateIncident = [
     ])
     .withMessage('Invalid category'),
   
+  body('submissionDestination')
+    .isIn(['hr', 'ngo', 'legal_aid'])
+    .withMessage('Invalid submission destination'),
+  
+  body('organizationName')
+    .optional()
+    .trim()
+    .isLength({ min: 2, max: 100 })
+    .withMessage('Organization name must be between 2 and 100 characters'),
+  
   body('tags')
     .optional()
     .isArray()
@@ -124,6 +134,58 @@ const validateAIAssistant = [
     .withMessage('Invalid language selection')
 ];
 
+// Validation rules for admin registration
+const validateAdminRegistration = [
+  body('username')
+    .trim()
+    .isLength({ min: 3, max: 30 })
+    .withMessage('Username must be between 3 and 30 characters')
+    .matches(/^[a-zA-Z0-9_]+$/)
+    .withMessage('Username can only contain letters, numbers, and underscores'),
+  
+  body('email')
+    .isEmail()
+    .withMessage('Valid email address is required')
+    .normalizeEmail(),
+  
+  body('password')
+    .isLength({ min: 6 })
+    .withMessage('Password must be at least 6 characters long'),
+  
+  body('role')
+    .isIn(['hr_admin', 'ngo_admin', 'legal_aid_admin'])
+    .withMessage('Invalid role selection'),
+  
+  body('organization.name')
+    .trim()
+    .isLength({ min: 2, max: 100 })
+    .withMessage('Organization name must be between 2 and 100 characters'),
+  
+  body('organization.id')
+    .optional()
+    .trim()
+    .isLength({ min: 3, max: 50 })
+    .withMessage('Organization ID must be between 3 and 50 characters')
+    .matches(/^[a-zA-Z0-9_-]+$/)
+    .withMessage('Organization ID can only contain letters, numbers, underscores, and hyphens'),
+  
+  body('organization.type')
+    .isIn(['corporation', 'ngo', 'legal_firm'])
+    .withMessage('Invalid organization type')
+];
+
+// Validation rules for admin login
+const validateAdminLogin = [
+  body('username')
+    .trim()
+    .notEmpty()
+    .withMessage('Username or email is required'),
+  
+  body('password')
+    .notEmpty()
+    .withMessage('Password is required')
+];
+
 // Generic validation result handler
 const handleValidationErrors = (req, res, next) => {
   const errors = validationResult(req);
@@ -145,5 +207,7 @@ module.exports = {
   validateIncident,
   validateEvidence,
   validateAIAssistant,
+  validateAdminRegistration,
+  validateAdminLogin,
   handleValidationErrors
 }; 

@@ -9,7 +9,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Badge } from "@/components/ui/badge"
-import { Shield, ArrowLeft, Save, Mic, MicOff, Upload, Calendar, MapPin, Users, AlertTriangle } from "lucide-react"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Shield, ArrowLeft, Save, Mic, MicOff, Upload, Calendar, MapPin, Users, AlertTriangle, Building2, Heart, Scale } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useLanguage } from "@/components/LanguageProvider"
@@ -21,6 +22,8 @@ export default function LogIncidentPage() {
   const [location, setLocation] = useState("")
   const [witnesses, setWitnesses] = useState("")
   const [severity, setSeverity] = useState("medium")
+  const [submissionDestination, setSubmissionDestination] = useState("")
+  const [organizationName, setOrganizationName] = useState("")
   const [isRecording, setIsRecording] = useState(false)
   const [recordingTime, setRecordingTime] = useState(0)
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([])
@@ -48,6 +51,8 @@ export default function LogIncidentPage() {
         location,
         witnesses,
         severity,
+        submissionDestination,
+        organizationName: submissionDestination === 'hr' ? organizationName : undefined,
         category: 'other', // Default category
         tags: []
       }
@@ -259,6 +264,51 @@ export default function LogIncidentPage() {
                     ))}
                   </div>
                 </div>
+
+                {/* Submission Destination */}
+                <div>
+                  <Label htmlFor="submissionDestination">Where should this report be submitted?</Label>
+                  <Select value={submissionDestination} onValueChange={setSubmissionDestination}>
+                    <SelectTrigger className="mt-1">
+                      <SelectValue placeholder="Select submission destination" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="hr">
+                        <div className="flex items-center">
+                          <Building2 className="h-4 w-4 mr-2 text-blue-600" />
+                          HR Department
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="ngo">
+                        <div className="flex items-center">
+                          <Heart className="h-4 w-4 mr-2 text-green-600" />
+                          NGO Support
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="legal_aid">
+                        <div className="flex items-center">
+                          <Scale className="h-4 w-4 mr-2 text-purple-600" />
+                          Legal Aid
+                        </div>
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Organization Name (only for HR) */}
+                {submissionDestination === 'hr' && (
+                  <div>
+                    <Label htmlFor="organizationName">Organization Name</Label>
+                    <Input
+                      id="organizationName"
+                      value={organizationName}
+                      onChange={(e) => setOrganizationName(e.target.value)}
+                      placeholder="Enter your organization name"
+                      className="mt-1"
+                      required
+                    />
+                  </div>
+                )}
               </CardContent>
             </Card>
 
@@ -386,7 +436,7 @@ export default function LogIncidentPage() {
               <Button 
                 onClick={handleSave} 
                 className="w-full bg-purple-600 hover:bg-purple-700" 
-                disabled={isSubmitting || !description.trim()}
+                disabled={isSubmitting || !description.trim() || !submissionDestination || (submissionDestination === 'hr' && !organizationName.trim())}
               >
                 <Save className="h-4 w-4 mr-2" />
                 {isSubmitting ? 'Saving...' : `${t("save")} Securely`}

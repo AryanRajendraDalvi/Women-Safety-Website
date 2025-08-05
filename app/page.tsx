@@ -86,6 +86,11 @@ export default function LandingPage() {
                 <Link href="/signup">
                   <Button className="bg-purple-600 hover:bg-purple-700">Get Started</Button>
                 </Link>
+                <Link href="/admin-login">
+                  <Button variant="outline" className="border-blue-300 text-blue-600 hover:bg-blue-50">
+                    Admin Portal
+                  </Button>
+                </Link>
               </>
             )}
           </div>

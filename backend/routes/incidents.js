@@ -65,6 +65,8 @@ router.post('/', auth, validateIncident, handleValidationErrors, async (req, res
       witnesses,
       severity,
       category,
+      submissionDestination,
+      organizationName,
       tags
     } = req.body;
 
@@ -76,6 +78,8 @@ router.post('/', auth, validateIncident, handleValidationErrors, async (req, res
       witnesses,
       severity,
       category,
+      submissionDestination,
+      organizationName,
       tags: tags || []
     });
 

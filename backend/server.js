@@ -18,6 +18,8 @@ const userRoutes = require('./routes/users');
 const incidentRoutes = require('./routes/incidents');
 const evidenceRoutes = require('./routes/evidence');
 const aiAssistantRoutes = require('./routes/aiAssistant');
+const adminAuthRoutes = require('./routes/adminAuth');
+const adminDashboardRoutes = require('./routes/adminDashboard');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -69,6 +71,8 @@ app.use('/api/users', userRoutes);
 app.use('/api/incidents', incidentRoutes);
 app.use('/api/evidence', evidenceRoutes);
 app.use('/api/ai-assistant', aiAssistantRoutes);
+app.use('/api/admin/auth', adminAuthRoutes);
+app.use('/api/admin/dashboard', adminDashboardRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
@@ -85,7 +89,7 @@ app.use('*', (req, res) => {
 });
 
 // MongoDB connection
-const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/yourdbname'; // Replace with your DB name
+const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/test'; // Using test database
 
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB connected'))

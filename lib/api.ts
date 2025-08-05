@@ -12,7 +12,8 @@ class ApiService {
 
   constructor(baseURL: string) {
     this.baseURL = baseURL;
-    this.token = typeof window !== 'undefined' ? localStorage.getItem('safespace_token') : null;
+    this.token = typeof window !== 'undefined' ? 
+      localStorage.getItem('safespace_token') || localStorage.getItem('safespace_admin_token') : null;
   }
 
   private getHeaders(): HeadersInit {
@@ -30,12 +31,17 @@ class ApiService {
   private async request<T>(endpoint: string, options: RequestInit = {}): Promise<ApiResponse<T>> {
     try {
       const url = `${this.baseURL}${endpoint}`;
+      console.log('Making API request to:', url);
+      console.log('Request options:', options);
+      
       const response = await fetch(url, {
         ...options,
         headers: this.getHeaders(),
       });
 
+      console.log('Response status:', response.status);
       const data = await response.json();
+      console.log('Response data:', data);
 
       if (!response.ok) {
         return { error: data.error || 'An error occurred' };
@@ -211,6 +217,78 @@ class ApiService {
   // Health check
   async healthCheck() {
     return this.request('/health');
+  }
+
+  // Admin authentication endpoints
+  async adminLogin(username: string, password: string) {
+    return this.request('/admin/auth/login', {
+      method: 'POST',
+      body: JSON.stringify({ username, password }),
+    });
+  }
+
+  async adminRegister(adminData: {
+    username: string;
+    email: string;
+    password: string;
+    role: string;
+    organization: {
+      name: string;
+      type: string;
+    };
+  }) {
+    return this.request('/admin/auth/register', {
+      method: 'POST',
+      body: JSON.stringify(adminData),
+    });
+  }
+
+  async adminLogout() {
+    const response = await this.request('/admin/auth/logout', {
+      method: 'POST',
+    });
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('safespace_admin_token');
+      localStorage.removeItem('safespace_admin_user');
+    }
+    return response;
+  }
+
+  async getAdminProfile() {
+    return this.request('/admin/auth/profile');
+  }
+
+  async refreshAdminToken() {
+    return this.request('/admin/auth/refresh', {
+      method: 'POST',
+    });
+  }
+
+  // Admin dashboard endpoints
+  async getAdminDashboardOverview() {
+    return this.request('/admin/dashboard/overview');
+  }
+
+  async getAdminDashboardStats() {
+    return this.request('/admin/dashboard/stats');
+  }
+
+  async getAdminIncidents(page: number = 1, limit: number = 10, filters?: any) {
+    const params = new URLSearchParams({
+      page: page.toString(),
+      limit: limit.toString(),
+      ...filters,
+    });
+    return this.request(`/admin/dashboard/incidents?${params}`);
+  }
+
+  async getAdminUsers(page: number = 1, limit: number = 10, filters?: any) {
+    const params = new URLSearchParams({
+      page: page.toString(),
+      limit: limit.toString(),
+      ...filters,
+    });
+    return this.request(`/admin/dashboard/users?${params}`);
   }
 }
 

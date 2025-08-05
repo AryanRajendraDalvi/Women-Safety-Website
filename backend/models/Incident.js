@@ -45,6 +45,19 @@ const incidentSchema = new mongoose.Schema({
     ],
     default: 'other'
   },
+  submissionDestination: {
+    type: String,
+    enum: ['hr', 'ngo', 'legal_aid'],
+    required: true
+  },
+  organizationName: {
+    type: String,
+    trim: true,
+    maxlength: 100,
+    required: function() {
+      return this.submissionDestination === 'hr';
+    }
+  },
   status: {
     type: String,
     enum: ['draft', 'submitted', 'under_review', 'resolved', 'closed'],
@@ -97,6 +110,8 @@ incidentSchema.methods.getSummary = function() {
     status: this.status,
     location: this.location,
     witnesses: this.witnesses,
+    submissionDestination: this.submissionDestination,
+    organizationName: this.organizationName,
     createdAt: this.createdAt,
     updatedAt: this.updatedAt,
     timestamp: this.createdAt // For compatibility with frontend
