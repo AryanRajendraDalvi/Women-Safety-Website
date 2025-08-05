@@ -28,25 +28,63 @@ export default function LogIncidentPage() {
   const router = useRouter()
   const { t } = useLanguage()
 
-  const handleSave = () => {
-    const logEntry = {
-      id: Date.now(),
-      title,
-      description,
-      location,
-      witnesses,
-      severity,
-      timestamp: new Date().toISOString(),
-      files: uploadedFiles.map((f) => f.name),
-      encrypted: true,
+  const handleSave = async () => {
+    try {
+      const token = localStorage.getItem('safespace_token')
+      if (!token) {
+        alert('Please login to continue')
+        router.push('/login')
+        return
+      }
+
+      const incidentData = {
+        title,
+        description,
+        location,
+        witnesses,
+        severity,
+        category: 'other', // Default category
+        tags: []
+      }
+
+      const response = await fetch('/api/incidents', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(incidentData),
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        // Upload files if any
+        if (uploadedFiles.length > 0) {
+          for (const file of uploadedFiles) {
+            const formData = new FormData()
+            formData.append('file', file)
+            formData.append('incidentId', data.incident.id)
+            formData.append('description', `Evidence for incident: ${title}`)
+
+            await fetch('/api/evidence/upload', {
+              method: 'POST',
+              headers: {
+                'Authorization': `Bearer ${token}`,
+              },
+              body: formData,
+            })
+          }
+        }
+
+        router.push('/evidence-vault')
+      } else {
+        alert(data.error || 'Failed to save incident')
+      }
+    } catch (error) {
+      console.error('Save incident error:', error)
+      alert('Failed to save incident. Please try again.')
     }
-
-    // Save to localStorage (in real app, this would be encrypted and sent to backend)
-    const existingLogs = JSON.parse(localStorage.getItem("safespace_logs") || "[]")
-    existingLogs.push(logEntry)
-    localStorage.setItem("safespace_logs", JSON.stringify(existingLogs))
-
-    router.push("/evidence-vault")
   }
 
   const toggleRecording = () => {

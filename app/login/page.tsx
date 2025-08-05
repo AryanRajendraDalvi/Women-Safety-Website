@@ -19,17 +19,31 @@ export default function LoginPage() {
   const router = useRouter()
   const { t } = useLanguage()
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
-    // In a real app, this would authenticate with the backend
-    // For demo purposes, we'll just check if user exists in localStorage
-    const existingUser = localStorage.getItem("safespace_user")
-    if (existingUser) {
-      router.push("/dashboard")
-    } else {
-      // Create a demo user for login
-      localStorage.setItem("safespace_user", JSON.stringify({ username, language: "english" }))
-      router.push("/dashboard")
+    
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        // Store token and user data
+        localStorage.setItem('safespace_token', data.token)
+        localStorage.setItem('safespace_user', JSON.stringify(data.user))
+        router.push('/dashboard')
+      } else {
+        alert(data.error || 'Login failed')
+      }
+    } catch (error) {
+      console.error('Login error:', error)
+      alert('Login failed. Please try again.')
     }
   }
 

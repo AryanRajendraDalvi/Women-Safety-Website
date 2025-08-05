@@ -26,7 +26,7 @@ export default function SignupPage() {
   const router = useRouter()
   const { language, setLanguage, t } = useLanguage()
 
-  const handleSignup = (e: React.FormEvent) => {
+  const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault()
     if (password !== confirmPassword) {
       alert("Passwords don't match!")
@@ -37,9 +37,33 @@ export default function SignupPage() {
       return
     }
 
-    // Store user data (in real app, this would be encrypted and sent to backend)
-    localStorage.setItem("safespace_user", JSON.stringify({ username, language: selectedLanguage }))
-    router.push("/dashboard")
+    try {
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          username, 
+          password, 
+          language: selectedLanguage 
+        }),
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        // Store token and user data
+        localStorage.setItem('safespace_token', data.token)
+        localStorage.setItem('safespace_user', JSON.stringify(data.user))
+        router.push('/dashboard')
+      } else {
+        alert(data.error || 'Registration failed')
+      }
+    } catch (error) {
+      console.error('Registration error:', error)
+      alert('Registration failed. Please try again.')
+    }
   }
 
   return (

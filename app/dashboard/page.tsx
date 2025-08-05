@@ -41,9 +41,25 @@ export default function DashboardPage() {
     setRecentLogs(logs.slice(-3).reverse()) // Show last 3 logs
   }, [router])
 
-  const handleLogout = () => {
-    localStorage.removeItem("safespace_user")
-    router.push("/")
+  const handleLogout = async () => {
+    try {
+      const token = localStorage.getItem('safespace_token')
+      if (token) {
+        await fetch('/api/auth/logout', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        })
+      }
+    } catch (error) {
+      console.error('Logout error:', error)
+    } finally {
+      localStorage.removeItem('safespace_user')
+      localStorage.removeItem('safespace_token')
+      router.push('/')
+    }
   }
 
   if (!user) return null
