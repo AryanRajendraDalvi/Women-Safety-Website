@@ -6,6 +6,7 @@ import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/ca
 import { Shield, Lock, FileText, Users, Globe, Zap, LogOut, User } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import ChatButton from "@/components/ChatButton"
 
 export default function LandingPage() {
   const [user, setUser] = useState<any>(null)
@@ -351,6 +352,9 @@ export default function LandingPage() {
           </div>
         </div>
       </footer>
+
+      {/* SOS Chatbot */}
+      <ChatButton />
     </div>
   )
 }

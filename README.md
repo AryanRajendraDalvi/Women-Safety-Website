@@ -25,6 +25,7 @@ A privacy-first digital platform for women's workplace safety in India, built wi
 - Node.js 18+ 
 - MongoDB (local or Atlas)
 - npm or pnpm
+- Google Gemini API key (optional, for enhanced chatbot features)
 
 ### 1. Clone and Setup
 ```bash
@@ -55,8 +56,9 @@ npm run dev
 # From root directory
 npm install
 
-# Create .env.local for API URL
+# Create .env.local for API URL and optional Gemini API
 echo "NEXT_PUBLIC_API_URL=http://localhost:5000/api" > .env.local
+# Add GEMINI_API_KEY=your_key_here to .env.local for enhanced chatbot
 
 # Start development server
 npm run dev
@@ -120,7 +122,11 @@ BCRYPT_ROUNDS=12
 
 #### Frontend (.env.local)
 ```env
+# API Configuration
 NEXT_PUBLIC_API_URL=http://localhost:5000/api
+
+# Gemini API for SOS Chatbot (optional)
+GEMINI_API_KEY=your_gemini_api_key_here
 ```
 
 ## 🗄️ Database Schema
@@ -171,6 +177,9 @@ NEXT_PUBLIC_API_URL=http://localhost:5000/api
 - `POST /api/ai-assistant/generate-summary` - Generate incident summary
 - `POST /api/ai-assistant/legal-advice` - Get legal advice
 
+### SOS Chatbot
+- `POST /api/chatbot` - AI-powered emotional support and guidance
+
 ## 🔒 Security Features
 
 - **Password Hashing**: bcryptjs with configurable rounds
@@ -205,9 +214,10 @@ Supports multiple languages:
 1. **Anonymous Authentication** - No email/phone required
 2. **Evidence Logging** - Text, audio, photos, files
 3. **AI Assistant** - POSH-compliant complaint generation
-4. **Emergency Features** - Quick access to help
-5. **Resource Library** - Legal guides and templates
-6. **Multi-language Support** - Internationalization ready
+4. **SOS Chatbot** - AI-powered emotional support and guidance
+5. **Emergency Features** - Quick access to help
+6. **Resource Library** - Legal guides and templates
+7. **Multi-language Support** - Internationalization ready
 
 ### Privacy & Security
 - Client-side encryption
@@ -292,6 +302,16 @@ MIT License - see LICENSE file for details
 For support and questions:
 - Create an issue in the repository
 - Contact the development team
+
+## 🤖 SOS Chatbot
+
+The platform includes an AI-powered SOS chatbot that provides:
+- **Emotional Support**: Empathetic responses for women experiencing workplace harassment
+- **Legal Guidance**: Information about POSH Act and workplace rights
+- **Safety Features**: Emergency detection and immediate help resources
+- **Confidential Conversations**: Private, secure chat interface
+
+For detailed setup instructions, see [CHATBOT_SETUP.md](./CHATBOT_SETUP.md)
 
 ## 🔄 Version History
 
