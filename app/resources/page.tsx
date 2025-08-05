@@ -11,9 +11,9 @@ import { useLanguage } from "@/components/LanguageProvider"
 import { HomeButton } from "@/components/HomeButton"
 
 export default function ResourcesPage() {
-  const [selectedLanguage, setSelectedLanguage] = useState("english")
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedCity, setSelectedCity] = useState("all")
+  const [selectedCategory, setSelectedCategory] = useState("all")
 
   const { t, language, setLanguage } = useLanguage()
 

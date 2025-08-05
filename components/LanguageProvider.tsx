@@ -25,14 +25,32 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     }
   }, [])
 
-  const setLanguage = (lang: Language) => {
+  const setLanguage = async (lang: Language) => {
     setLanguageState(lang)
+    
     // Update user settings in localStorage
     const savedUser = localStorage.getItem("safespace_user")
     if (savedUser) {
       const user = JSON.parse(savedUser)
       user.language = lang
       localStorage.setItem("safespace_user", JSON.stringify(user))
+      
+      // Also update in backend if user is logged in
+      const token = localStorage.getItem("safespace_token")
+      if (token) {
+        try {
+          await fetch('/api/auth/profile', {
+            method: 'PUT',
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ language: lang }),
+          })
+        } catch (error) {
+          console.error('Failed to update language in backend:', error)
+        }
+      }
     }
   }
 

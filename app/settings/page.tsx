@@ -16,10 +16,10 @@ import { HomeButton } from "@/components/HomeButton"
 export default function SettingsPage() {
   const [user, setUser] = useState<any>(null)
   const [username, setUsername] = useState("")
-  const [language, setLanguage] = useState("english")
   const [notifications, setNotifications] = useState(true)
   const [autoBackup, setAutoBackup] = useState(false)
   const [twoFactorAuth, setTwoFactorAuth] = useState(false)
+  const [isSaving, setIsSaving] = useState(false)
   const router = useRouter()
 
   const { language: currentLang, setLanguage: setCurrentLanguage, t } = useLanguage()
@@ -33,22 +33,46 @@ export default function SettingsPage() {
     const parsedUser = JSON.parse(userData)
     setUser(parsedUser)
     setUsername(parsedUser.username)
-    setLanguage(parsedUser.language || "english")
   }, [router])
 
-  const saveSettings = () => {
-    const updatedUser = {
-      ...user,
-      username,
-      language,
-      settings: {
-        notifications,
-        autoBackup,
-        twoFactorAuth,
-      },
+  const saveSettings = async () => {
+    setIsSaving(true)
+    try {
+      const updatedUser = {
+        ...user,
+        username,
+        language: currentLang,
+        settings: {
+          notifications,
+          autoBackup,
+          twoFactorAuth,
+        },
+      }
+      localStorage.setItem("safespace_user", JSON.stringify(updatedUser))
+      
+      // Update backend if user is logged in
+      const token = localStorage.getItem("safespace_token")
+      if (token) {
+        await fetch('/api/auth/profile', {
+          method: 'PUT',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ 
+            username,
+            language: currentLang 
+          }),
+        })
+      }
+      
+      alert("Settings saved successfully!")
+    } catch (error) {
+      console.error('Error saving settings:', error)
+      alert("Failed to save settings. Please try again.")
+    } finally {
+      setIsSaving(false)
     }
-    localStorage.setItem("safespace_user", JSON.stringify(updatedUser))
-    alert("Settings saved successfully!")
   }
 
   const exportData = () => {
@@ -146,7 +170,6 @@ export default function SettingsPage() {
                     value={currentLang}
                     onChange={(e) => {
                       const newLang = e.target.value as any
-                      setLanguage(newLang)
                       setCurrentLanguage(newLang)
                     }}
                     className="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-500"
@@ -333,8 +356,8 @@ export default function SettingsPage() {
             </Card>
 
             {/* Save Settings */}
-            <Button onClick={saveSettings} className="w-full bg-purple-600 hover:bg-purple-700">
-              {t("save")} All {t("settings")}
+            <Button onClick={saveSettings} className="w-full bg-purple-600 hover:bg-purple-700" disabled={isSaving}>
+              {isSaving ? "Saving..." : t("save")} All {t("settings")}
             </Button>
           </div>
         </div>

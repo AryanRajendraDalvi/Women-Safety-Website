@@ -1,11 +1,60 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Shield, Lock, FileText, Users, Globe, Zap } from "lucide-react"
+import { Shield, Lock, FileText, Users, Globe, Zap, LogOut, User } from "lucide-react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 export default function LandingPage() {
+  const [user, setUser] = useState<any>(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const router = useRouter()
+
+  useEffect(() => {
+    // Check if user is logged in
+    const userData = localStorage.getItem("safespace_user")
+    const token = localStorage.getItem("safespace_token")
+    
+    if (userData && token) {
+      setUser(JSON.parse(userData))
+    }
+    setIsLoading(false)
+  }, [])
+
+  const handleLogout = async () => {
+    try {
+      const token = localStorage.getItem('safespace_token')
+      if (token) {
+        await fetch('/api/auth/logout', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        })
+      }
+    } catch (error) {
+      console.error('Logout error:', error)
+    } finally {
+      localStorage.removeItem('safespace_user')
+      localStorage.removeItem('safespace_token')
+      setUser(null)
+    }
+  }
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-pink-50 flex items-center justify-center">
+        <div className="text-center">
+          <Shield className="h-12 w-12 text-purple-600 mx-auto mb-4 animate-pulse" />
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-pink-50">
       {/* Header */}
@@ -16,12 +65,29 @@ export default function LandingPage() {
             <span className="text-2xl font-bold text-gray-900">SafeSpace</span>
           </div>
           <div className="flex space-x-4">
-            <Link href="/login">
-              <Button variant="ghost">Login</Button>
-            </Link>
-            <Link href="/signup">
-              <Button className="bg-purple-600 hover:bg-purple-700">Get Started</Button>
-            </Link>
+            {user ? (
+              <>
+                <Link href="/dashboard">
+                  <Button variant="ghost" className="flex items-center">
+                    <User className="h-4 w-4 mr-2" />
+                    Dashboard
+                  </Button>
+                </Link>
+                <Button variant="ghost" onClick={handleLogout} className="flex items-center">
+                  <LogOut className="h-4 w-4 mr-2" />
+                  Log Out
+                </Button>
+              </>
+            ) : (
+              <>
+                <Link href="/login">
+                  <Button variant="ghost">Login</Button>
+                </Link>
+                <Link href="/signup">
+                  <Button className="bg-purple-600 hover:bg-purple-700">Get Started</Button>
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </header>
@@ -30,23 +96,42 @@ export default function LandingPage() {
       <section className="py-20 px-4">
         <div className="container mx-auto text-center max-w-4xl">
           <h1 className="text-5xl font-bold text-gray-900 mb-6">
-            Your Privacy-First Digital Ally for Workplace Safety
+            {user ? `Welcome back, ${user.username}!` : "Your Privacy-First Digital Ally for Workplace Safety"}
           </h1>
           <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-            Secure evidence logging, clear pathways to redressal, and fostering accountability in workplaces across
-            India. Your identity remains protected, your voice stays strong.
+            {user 
+              ? "Continue documenting incidents and building your evidence vault securely."
+              : "Secure evidence logging, clear pathways to redressal, and fostering accountability in workplaces across India. Your identity remains protected, your voice stays strong."
+            }
           </p>
           <div className="flex justify-center space-x-4">
-            <Link href="/signup">
-              <Button size="lg" className="bg-purple-600 hover:bg-purple-700 px-8 py-3">
-                Start Logging Securely
-              </Button>
-            </Link>
-            <Link href="/resources">
-              <Button size="lg" variant="outline" className="px-8 py-3 bg-transparent">
-                Know Your Rights
-              </Button>
-            </Link>
+            {user ? (
+              <>
+                <Link href="/log-incident">
+                  <Button size="lg" className="bg-purple-600 hover:bg-purple-700 px-8 py-3">
+                    Log New Incident
+                  </Button>
+                </Link>
+                <Link href="/dashboard">
+                  <Button size="lg" variant="outline" className="px-8 py-3 bg-transparent">
+                    Go to Dashboard
+                  </Button>
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link href="/signup">
+                  <Button size="lg" className="bg-purple-600 hover:bg-purple-700 px-8 py-3">
+                    Start Logging Securely
+                  </Button>
+                </Link>
+                <Link href="/resources">
+                  <Button size="lg" variant="outline" className="px-8 py-3 bg-transparent">
+                    Know Your Rights
+                  </Button>
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </section>
@@ -159,15 +244,28 @@ export default function LandingPage() {
       {/* CTA Section */}
       <section className="py-16 px-4 bg-purple-600 text-white">
         <div className="container mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-4">Ready to Take Control?</h2>
+          <h2 className="text-3xl font-bold mb-4">
+            {user ? "Ready to Document an Incident?" : "Ready to Take Control?"}
+          </h2>
           <p className="text-xl mb-8 opacity-90">
-            Join thousands of women who are building safer workplaces across India.
+            {user 
+              ? "Keep building your evidence vault and stay protected."
+              : "Join thousands of women who are building safer workplaces across India."
+            }
           </p>
-          <Link href="/signup">
-            <Button size="lg" variant="secondary" className="px-8 py-3">
-              Create Your Secure Account
-            </Button>
-          </Link>
+          {user ? (
+            <Link href="/log-incident">
+              <Button size="lg" variant="secondary" className="px-8 py-3">
+                Log New Incident
+              </Button>
+            </Link>
+          ) : (
+            <Link href="/signup">
+              <Button size="lg" variant="secondary" className="px-8 py-3">
+                Create Your Secure Account
+              </Button>
+            </Link>
+          )}
         </div>
       </section>
 

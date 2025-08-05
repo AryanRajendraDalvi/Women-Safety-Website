@@ -36,6 +36,15 @@ export const translations = {
     back: "Back",
     next: "Next",
     loading: "Loading...",
+    submit: "Submit",
+    close: "Close",
+    yes: "Yes",
+    no: "No",
+    ok: "OK",
+    error: "Error",
+    success: "Success",
+    warning: "Warning",
+    info: "Information",
 
     // Dashboard
     welcomeBack: "Welcome Back",
@@ -45,6 +54,9 @@ export const translations = {
     evidenceVault: "Evidence Vault",
     resources: "Resources",
     settings: "Settings",
+    recentActivity: "Recent Activity",
+    securityStatus: "Security Status",
+    emergencySupport: "Emergency Support",
 
     // Forms
     username: "Username",
@@ -55,11 +67,15 @@ export const translations = {
     location: "Location",
     witnesses: "Witnesses",
     severity: "Severity",
+    category: "Category",
+    tags: "Tags",
+    optional: "Optional",
+    required: "Required",
 
     // Security
     encrypted: "Encrypted",
-    securityStatus: "Security Status",
     privacyFirst: "Privacy First",
+    secureAccount: "Secure Account",
 
     // Emergency
     emergency: "Emergency",
@@ -76,6 +92,42 @@ export const translations = {
     termsOfService: "Terms of Service",
     poshActGuide: "PoSH Act Guide",
     footerCopyright: "Built with privacy and security at its core.",
+
+    // Settings
+    accountSettings: "Account Settings",
+    privacySecurity: "Privacy & Security",
+    dataManagement: "Data Management",
+    exportData: "Export Data",
+    deleteAllData: "Delete All Data",
+    notifications: "Notifications",
+    autoBackup: "Auto Backup",
+    twoFactorAuth: "Two-Factor Authentication",
+    encryptionStatus: "Encryption Status",
+    clientSideEncryption: "Client-side Encryption",
+    dataAnonymization: "Data Anonymization",
+    zeroKnowledgeArchitecture: "Zero-Knowledge Architecture",
+    active: "Active",
+    enabled: "Enabled",
+    maximum: "Maximum",
+    accountType: "Account Type",
+    anonymous: "Anonymous",
+    dataStorage: "Data Storage",
+    localOnly: "Local Only",
+    privacyLevel: "Privacy Level",
+    needHelp: "Need Help?",
+    contactSupport: "Contact Support",
+    saveAllSettings: "Save All Settings",
+    saving: "Saving...",
+    settingsSaved: "Settings saved successfully!",
+    failedToSave: "Failed to save settings. Please try again.",
+
+    // Language
+    preferredLanguage: "Preferred Language",
+    language: "Language",
+    english: "English",
+    hindi: "हिंदी (Hindi)",
+    marathi: "मराठी (Marathi)",
+    tamil: "தமிழ் (Tamil)",
   },
 
   hindi: {
@@ -114,6 +166,15 @@ export const translations = {
     back: "वापस",
     next: "अगला",
     loading: "लोड हो रहा है...",
+    submit: "सबमिट करें",
+    close: "बंद करें",
+    yes: "हाँ",
+    no: "नहीं",
+    ok: "ठीक है",
+    error: "त्रुटि",
+    success: "सफलता",
+    warning: "चेतावनी",
+    info: "जानकारी",
 
     // Dashboard
     welcomeBack: "वापस स्वागत है",
@@ -123,6 +184,9 @@ export const translations = {
     evidenceVault: "साक्ष्य तिजोरी",
     resources: "संसाधन",
     settings: "सेटिंग्स",
+    recentActivity: "हाल की गतिविधि",
+    securityStatus: "सुरक्षा स्थिति",
+    emergencySupport: "आपातकालीन सहायता",
 
     // Forms
     username: "उपयोगकर्ता नाम",
@@ -133,11 +197,15 @@ export const translations = {
     location: "स्थान",
     witnesses: "गवाह",
     severity: "गंभीरता",
+    category: "श्रेणी",
+    tags: "टैग",
+    optional: "वैकल्पिक",
+    required: "आवश्यक",
 
     // Security
     encrypted: "एन्क्रिप्टेड",
-    securityStatus: "सुरक्षा स्थिति",
     privacyFirst: "गोपनीयता प्राथमिक",
+    secureAccount: "सुरक्षित खाता",
 
     // Emergency
     emergency: "आपातकाल",
@@ -154,6 +222,42 @@ export const translations = {
     termsOfService: "सेवा की शर्तें",
     poshActGuide: "PoSH अधिनियम गाइड",
     footerCopyright: "गोपनीयता और सुरक्षा के साथ निर्मित।",
+
+    // Settings
+    accountSettings: "खाता सेटिंग्स",
+    privacySecurity: "गोपनीयता और सुरक्षा",
+    dataManagement: "डेटा प्रबंधन",
+    exportData: "डेटा निर्यात करें",
+    deleteAllData: "सभी डेटा हटाएं",
+    notifications: "सूचनाएं",
+    autoBackup: "स्वचालित बैकअप",
+    twoFactorAuth: "दो-कारक प्रमाणीकरण",
+    encryptionStatus: "एन्क्रिप्शन स्थिति",
+    clientSideEncryption: "क्लाइंट-साइड एन्क्रिप्शन",
+    dataAnonymization: "डेटा अनामीकरण",
+    zeroKnowledgeArchitecture: "शून्य-ज्ञान आर्किटेक्चर",
+    active: "सक्रिय",
+    enabled: "सक्षम",
+    maximum: "अधिकतम",
+    accountType: "खाता प्रकार",
+    anonymous: "अनाम",
+    dataStorage: "डेटा भंडारण",
+    localOnly: "केवल स्थानीय",
+    privacyLevel: "गोपनीयता स्तर",
+    needHelp: "मदद चाहिए?",
+    contactSupport: "सहायता से संपर्क करें",
+    saveAllSettings: "सभी सेटिंग्स सहेजें",
+    saving: "सहेज रहा है...",
+    settingsSaved: "सेटिंग्स सफलतापूर्वक सहेजी गईं!",
+    failedToSave: "सेटिंग्स सहेजने में विफल। कृपया पुनः प्रयास करें।",
+
+    // Language
+    preferredLanguage: "पसंदीदा भाषा",
+    language: "भाषा",
+    english: "अंग्रेजी (English)",
+    hindi: "हिंदी (Hindi)",
+    marathi: "मराठी (Marathi)",
+    tamil: "தமிழ் (Tamil)",
   },
 
   marathi: {
@@ -192,6 +296,15 @@ export const translations = {
     back: "परत",
     next: "पुढे",
     loading: "लोड होत आहे...",
+    submit: "सबमिट करा",
+    close: "बंद करा",
+    yes: "हाँ",
+    no: "नहीं",
+    ok: "ठीक आहे",
+    error: "त्रुटी",
+    success: "सफलता",
+    warning: "चेतावनी",
+    info: "जानकारी",
 
     // Dashboard
     welcomeBack: "परत स्वागत",
@@ -201,6 +314,9 @@ export const translations = {
     evidenceVault: "पुरावा तिजोरी",
     resources: "संसाधने",
     settings: "सेटिंग्ज",
+    recentActivity: "हाल की गतिविधि",
+    securityStatus: "सुरक्षा स्थिती",
+    emergencySupport: "आणीबाणी सहाय्य",
 
     // Forms
     username: "वापरकर्तानाव",
@@ -211,11 +327,15 @@ export const translations = {
     location: "स्थान",
     witnesses: "साक्षीदार",
     severity: "गंभीरता",
+    category: "श्रेणी",
+    tags: "टैग",
+    optional: "वैकल्पिक",
+    required: "आवश्यक",
 
     // Security
     encrypted: "एन्क्रिप्टेड",
-    securityStatus: "सुरक्षा स्थिती",
     privacyFirst: "गोपनीयता प्राथमिक",
+    secureAccount: "सुरक्षित खाता",
 
     // Emergency
     emergency: "आणीबाणी",
@@ -232,6 +352,42 @@ export const translations = {
     termsOfService: "सेवेच्या अटी",
     poshActGuide: "PoSH कायदा मार्गदर्शक",
     footerCopyright: "गोपनीयता आणि सुरक्षेसह निर्मित।",
+
+    // Settings
+    accountSettings: "खातेचे सेटिंग्स",
+    privacySecurity: "गोपनीयता आणि सुरक्षा",
+    dataManagement: "डेटा व्यवस्थापन",
+    exportData: "डेटा निर्यात करा",
+    deleteAllData: "सर्व डेटा काढून टाका",
+    notifications: "सूचना",
+    autoBackup: "स्वतः बॅकअप",
+    twoFactorAuth: "दोन कारक प्रमाणपत्र",
+    encryptionStatus: "एन्क्रिप्शन स्थिती",
+    clientSideEncryption: "क्लायंट साइड एन्क्रिप्शन",
+    dataAnonymization: "डेटा अनामिकीकरण",
+    zeroKnowledgeArchitecture: "शून्य ज्ञान अर्काटेक्चर",
+    active: "क्रियाविषयक",
+    enabled: "सक्षम",
+    maximum: "अधिकतम",
+    accountType: "खातेचा प्रकार",
+    anonymous: "अनामिक",
+    dataStorage: "डेटा स्टोरेज",
+    localOnly: "एकवेळी केवल",
+    privacyLevel: "गोपनीयता पर्याय",
+    needHelp: "मदत आवश्यक आहे?",
+    contactSupport: "सहाय्याचा संपर्क करा",
+    saveAllSettings: "सर्व सेटिंग्स जतन करा",
+    saving: "जतन करत आहे...",
+    settingsSaved: "सेटिंग्स सफलतास जतन केले आहे!",
+    failedToSave: "सेटिंग्स जतन करण्यात आवश्यक आहे. कृपणे पुन्हा प्रयत्न करा.",
+
+    // Language
+    preferredLanguage: "प्राथमिक भाषा",
+    language: "भाषा",
+    english: "अंग्रेजी (English)",
+    hindi: "हिंदी (Hindi)",
+    marathi: "मराठी (Marathi)",
+    tamil: "தமிழ் (Tamil)",
   },
 
   tamil: {
@@ -271,6 +427,15 @@ export const translations = {
     back: "பின்",
     next: "அடுத்து",
     loading: "ஏற்றுகிறது...",
+    submit: "சமிக்குங்கள்",
+    close: "மூடுங்கள்",
+    yes: "ஆம்",
+    no: "இல்லை",
+    ok: "சரி",
+    error: "பிழை",
+    success: "வெற்றி",
+    warning: "எச்சரிக்கை",
+    info: "தகவல்",
 
     // Dashboard
     welcomeBack: "மீண்டும் வரவேற்கிறோம்",
@@ -280,6 +445,9 @@ export const translations = {
     evidenceVault: "சான்று பெட்டகம்",
     resources: "வளங்கள்",
     settings: "அமைப்புகள்",
+    recentActivity: "கடந்த நிகழ்வுகள்",
+    securityStatus: "பாதுகாப்பு நிலை",
+    emergencySupport: "அவசர உதவி",
 
     // Forms
     username: "பயனர்பெயர்",
@@ -290,11 +458,15 @@ export const translations = {
     location: "இடம்",
     witnesses: "சாட்சிகள்",
     severity: "தீவிரம்",
+    category: "பிரிவு",
+    tags: "குறியீடுகள்",
+    optional: "விருப்பம்",
+    required: "தேவை",
 
     // Security
     encrypted: "குறியாக்கம்",
-    securityStatus: "பாதுகாப்பு நிலை",
     privacyFirst: "தனியுரிமை முதல்",
+    secureAccount: "பாதுகாப்பு கணக்கு",
 
     // Emergency
     emergency: "அவசரநிலை",
@@ -311,6 +483,42 @@ export const translations = {
     termsOfService: "சேவை விதிமுறைகள்",
     poshActGuide: "PoSH சட்ட வழிகாட்டி",
     footerCopyright: "தனியுரிமை மற்றும் பாதுகாப்புடன் கட்டப்பட்டது.",
+
+    // Settings
+    accountSettings: "கணக்கு அமைப்புகள்",
+    privacySecurity: "தனியுரிமை மற்றும் பாதுகாப்பு",
+    dataManagement: "தரவு மேம்பாடு",
+    exportData: "தரவை வெளியேற்றுங்கள்",
+    deleteAllData: "அனைத்து தரவை நீக்குங்கள்",
+    notifications: "அறிவிப்புகள்",
+    autoBackup: "தனிமையாக பாக்கியை சேமிக்கவும்",
+    twoFactorAuth: "இரண்டு காரணி நிர்வாகம்",
+    encryptionStatus: "குறியாக்க நிலை",
+    clientSideEncryption: "குறியாக்க புறப்பகுதி",
+    dataAnonymization: "தரவு அநாமிக்கை",
+    zeroKnowledgeArchitecture: "பூஜ்ஜிய அறிவு அர்காட்டேக்கு",
+    active: "செயல்பாடு",
+    enabled: "செயல்படுத்தப்பட்டது",
+    maximum: "மிக்கம்",
+    accountType: "கணக்கு வகை",
+    anonymous: "அநாமிக்க",
+    dataStorage: "தரவு சேமிக்கப்படுகிறது",
+    localOnly: "முதல் மட்டும்",
+    privacyLevel: "தனியுரிமை நிலை",
+    needHelp: "உதவி தேவையா?",
+    contactSupport: "உதவி தொடர்பு கொள்கை",
+    saveAllSettings: "அனைத்து அமைப்புகளை சேமிக்கவும்",
+    saving: "சேமிக்கப்படுகிறது...",
+    settingsSaved: "அமைப்புகள் வெற்றிகரமாக சேமிக்கப்பட்டன!",
+    failedToSave: "அமைப்புகளை சேமிக்க முடியவில்லை. மீண்டும் முயற்சி செய்யுங்கள்.",
+
+    // Language
+    preferredLanguage: "முன்னும் மொழி",
+    language: "மொழி",
+    english: "ஆங்கிலம் (English)",
+    hindi: "ஹிந்தி (Hindi)",
+    marathi: "மराठी (Marathi)",
+    tamil: "தமிழ் (Tamil)",
   },
 }
 

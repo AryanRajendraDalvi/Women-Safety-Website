@@ -56,6 +56,10 @@ export default function SignupPage() {
         // Store token and user data
         localStorage.setItem('safespace_token', data.token)
         localStorage.setItem('safespace_user', JSON.stringify(data.user))
+        
+        // Set the language in the provider
+        setLanguage(selectedLanguage as any)
+        
         router.push('/dashboard')
       } else {
         alert(data.error || 'Registration failed')
