@@ -60,10 +60,24 @@ export default function IncidentAnalysisAI({
   const [isSubmittingFIR, setIsSubmittingFIR] = useState(false)
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null)
 
+  // Auto-analyze description when user finishes typing
+  useEffect(() => {
+    if (!description.trim()) {
+      setAnalysisResult(null)
+      return
+    }
+
+    // Debounce the analysis to avoid too many API calls
+    const timeoutId = setTimeout(() => {
+      analyzeIncident()
+    }, 2000) // Wait 2 seconds after user stops typing
+
+    return () => clearTimeout(timeoutId)
+  }, [description, location, witnesses])
+
   // Analyze incident severity
   const analyzeIncident = async () => {
     if (!description.trim()) {
-      toast.error('Please provide incident description for analysis')
       return
     }
 
@@ -94,10 +108,13 @@ export default function IncidentAnalysisAI({
         await getUserLocation()
       }
 
-      toast.success('Incident analysis completed')
+      // Only show success toast for severe cases to avoid spam
+      if (result.severity === 'critical' || result.severity === 'high') {
+        toast.success('Severe incident detected - FIR generation available')
+      }
     } catch (error) {
       console.error('Analysis error:', error)
-      toast.error('Failed to analyze incident. Please try again.')
+      // Don't show error toast for automatic analysis to avoid spam
     } finally {
       setIsAnalyzing(false)
     }
@@ -296,25 +313,14 @@ export default function IncidentAnalysisAI({
           {!analysisResult ? (
             <div className="text-center">
               <p className="text-sm text-gray-600 mb-4">
-                Let our AI analyze your incident description to assess severity and provide recommendations
+                AI will automatically analyze your incident description once you finish typing
               </p>
-              <Button
-                onClick={analyzeIncident}
-                disabled={isAnalyzing || !description.trim()}
-                className="bg-purple-600 hover:bg-purple-700"
-              >
-                {isAnalyzing ? (
-                  <>
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Analyzing...
-                  </>
-                ) : (
-                  <>
-                    <Shield className="h-4 w-4 mr-2" />
-                    Analyze Incident
-                  </>
-                )}
-              </Button>
+              {isAnalyzing && (
+                <div className="flex items-center justify-center space-x-2">
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  <span className="text-sm text-gray-600">Analyzing incident...</span>
+                </div>
+              )}
             </div>
           ) : (
             <div className="space-y-4">
