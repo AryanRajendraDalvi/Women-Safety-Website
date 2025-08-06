@@ -15,6 +15,7 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useLanguage } from "@/components/LanguageProvider"
 import { HomeButton } from "@/components/HomeButton"
+import IncidentAnalysisAI from "@/components/IncidentAnalysisAI"
 
 export default function LogIncidentPage() {
   const [title, setTitle] = useState("")
@@ -29,6 +30,9 @@ export default function LogIncidentPage() {
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([])
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
+  const [aiSeverity, setAiSeverity] = useState<string>("")
+  const [aiRecommendation, setAiRecommendation] = useState<string>("")
+  const [firData, setFirData] = useState<any>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const router = useRouter()
   const { t } = useLanguage()
@@ -153,6 +157,15 @@ export default function LogIncidentPage() {
     const mins = Math.floor(seconds / 60)
     const secs = seconds % 60
     return `${mins}:${secs.toString().padStart(2, "0")}`
+  }
+
+  const handleAnalysisComplete = (severity: string, recommendation: string) => {
+    setAiSeverity(severity)
+    setAiRecommendation(recommendation)
+  }
+
+  const handleFIRGenerated = (fir: any) => {
+    setFirData(fir)
   }
 
   return (
@@ -394,6 +407,15 @@ export default function LogIncidentPage() {
 
           {/* Sidebar */}
           <div className="space-y-6">
+            {/* AI Analysis */}
+            <IncidentAnalysisAI
+              description={description}
+              location={location}
+              witnesses={witnesses}
+              onAnalysisComplete={handleAnalysisComplete}
+              onFIRGenerated={handleFIRGenerated}
+            />
+
             {/* Security Notice */}
             <Card className="border-green-200 bg-green-50">
               <CardHeader>

@@ -180,6 +180,11 @@ GEMINI_API_KEY=your_gemini_api_key_here
 ### SOS Chatbot
 - `POST /api/chatbot` - AI-powered emotional support and guidance
 
+### Agentic AI System
+- `POST /api/incident-analysis` - AI-powered incident severity analysis
+- `POST /api/police-stations` - Find nearby police stations
+- `POST /api/submit-fir` - Submit FIR to police station
+
 ## 🔒 Security Features
 
 - **Password Hashing**: bcryptjs with configurable rounds
@@ -214,11 +219,12 @@ Supports multiple languages:
 1. **Anonymous Authentication** - No email/phone required
 2. **Evidence Logging** - Text, audio, photos, files
 3. **AI Assistant** - POSH-compliant complaint generation
-4. **SOS Chatbot** - AI-powered emotional support and guidance
-5. **Emergency Location Sharing** - Instant location sharing via WhatsApp
-6. **Emergency Features** - Quick access to help
-7. **Resource Library** - Legal guides and templates
-8. **Multi-language Support** - Internationalization ready
+4. **Agentic AI System** - Intelligent incident analysis and FIR generation
+5. **SOS Chatbot** - AI-powered emotional support and guidance
+6. **Emergency Location Sharing** - Instant location sharing via WhatsApp
+7. **Emergency Features** - Quick access to help
+8. **Resource Library** - Legal guides and templates
+9. **Multi-language Support** - Internationalization ready
 
 ### Privacy & Security
 - Client-side encryption
@@ -304,8 +310,9 @@ For support and questions:
 - Create an issue in the repository
 - Contact the development team
 
-## 🤖 SOS Chatbot
+## 🤖 AI Systems
 
+### SOS Chatbot
 The platform includes an AI-powered SOS chatbot that provides:
 - **Emotional Support**: Empathetic responses for women experiencing workplace harassment
 - **Legal Guidance**: Information about POSH Act and workplace rights
@@ -313,6 +320,16 @@ The platform includes an AI-powered SOS chatbot that provides:
 - **Confidential Conversations**: Private, secure chat interface
 
 For detailed setup instructions, see [CHATBOT_SETUP.md](./CHATBOT_SETUP.md)
+
+### Agentic AI System
+The platform features an advanced agentic AI system that provides:
+- **Intelligent Analysis**: AI-powered incident severity assessment using Gemini API
+- **Police Integration**: Automatic detection of nearby police stations
+- **FIR Generation**: Formal complaint creation and submission
+- **Legal Guidance**: Comprehensive legal implications and recommendations
+- **Dashboard Tracking**: Real-time FIR status updates and activity tracking
+
+For detailed setup instructions, see [AGENTIC_AI_SETUP.md](./AGENTIC_AI_SETUP.md)
 
 ## 🚨 Emergency Features
 
