@@ -35,9 +35,9 @@ The SafeSpace platform now includes an advanced agentic AI system that automatic
 
 ## 🚀 How It Works
 
-### Step 1: Automatic Incident Description Analysis
+### Step 1: Incident Description Analysis
 1. User enters incident description in the log incident page
-2. **AI automatically analyzes the text after 2 seconds of inactivity** (debounced)
+2. AI analyzes the text using Gemini API (or fallback keyword detection)
 3. System determines severity level and provides recommendations
 4. For critical/high severity cases, automatically requests location access
 
@@ -197,7 +197,7 @@ NEXT_PUBLIC_API_URL=http://localhost:5000/api
 ### 3. Testing the System
 1. Navigate to the log incident page
 2. Enter a detailed incident description
-3. **AI automatically analyzes the description after 2 seconds of inactivity**
+3. Click "Analyze Incident" to trigger AI analysis
 4. For severe cases, the system will automatically request location access
 5. Review and approve FIR details
 6. Check the dashboard for FIR activities
@@ -206,8 +206,8 @@ NEXT_PUBLIC_API_URL=http://localhost:5000/api
 
 ### For Users
 1. **Log Incident**: Enter incident details as usual
-2. **Automatic AI Analysis**: AI analyzes description automatically after 2 seconds of inactivity
-3. **Location Access**: Grant location permission if prompted for severe cases
+2. **AI Analysis**: Click "Analyze Incident" for severity assessment
+3. **Location Access**: Grant location permission if prompted
 4. **FIR Review**: Review generated FIR details
 5. **Submit FIR**: Approve and submit to police station
 6. **Track Progress**: Monitor FIR status in dashboard
