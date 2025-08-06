@@ -3,10 +3,11 @@
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Shield, Lock, FileText, Users, Globe, Zap, LogOut, User } from "lucide-react"
+import { Shield, Lock, FileText, Users, Globe, Zap, LogOut, User, AlertTriangle } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import ChatButton from "@/components/ChatButton"
+import EmergencyButton from "@/components/EmergencyButton"
 
 export default function LandingPage() {
   const [user, setUser] = useState<any>(null)
@@ -247,6 +248,68 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Emergency Support Section */}
+      <section className="py-16 px-4 bg-gradient-to-r from-red-600 to-red-700 text-white">
+        <div className="container mx-auto text-center">
+          <div className="max-w-4xl mx-auto">
+            <div className="flex items-center justify-center mb-6">
+              <AlertTriangle className="h-12 w-12 mr-4" />
+              <h2 className="text-3xl font-bold">Emergency Support</h2>
+            </div>
+            <p className="text-xl mb-8 opacity-90">
+              If you're in immediate danger, help is just one click away
+            </p>
+            
+            <div className="grid md:grid-cols-3 gap-6 mb-8">
+              <div className="bg-white/10 rounded-lg p-6 backdrop-blur-sm">
+                <div className="text-4xl mb-4">🚨</div>
+                <h3 className="font-semibold mb-2">Emergency Alert</h3>
+                <p className="text-sm opacity-90">
+                  Share your location instantly with emergency contacts via WhatsApp
+                </p>
+              </div>
+              
+              <div className="bg-white/10 rounded-lg p-6 backdrop-blur-sm">
+                <div className="text-4xl mb-4">📞</div>
+                <h3 className="font-semibold mb-2">24/7 Helplines</h3>
+                <p className="text-sm opacity-90">
+                  Direct access to police, women's helpline, and emergency services
+                </p>
+              </div>
+              
+              <div className="bg-white/10 rounded-lg p-6 backdrop-blur-sm">
+                <div className="text-4xl mb-4">💬</div>
+                <h3 className="font-semibold mb-2">AI Companion</h3>
+                <p className="text-sm opacity-90">
+                  Get immediate emotional support and guidance from our AI chatbot
+                </p>
+              </div>
+            </div>
+            
+            <div className="flex flex-wrap justify-center gap-4">
+              <a 
+                href="tel:100" 
+                className="bg-white text-red-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+              >
+                🚔 Police (100)
+              </a>
+              <a 
+                href="tel:181" 
+                className="bg-white text-red-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+              >
+                📞 Women Helpline (181)
+              </a>
+              <a 
+                href="tel:112" 
+                className="bg-white text-red-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+              >
+                🚨 Emergency (112)
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-16 px-4 bg-purple-600 text-white">
         <div className="container mx-auto text-center">
@@ -355,6 +418,9 @@ export default function LandingPage() {
 
       {/* SOS Chatbot */}
       <ChatButton />
+      
+      {/* Emergency Button */}
+      <EmergencyButton />
     </div>
   )
 }

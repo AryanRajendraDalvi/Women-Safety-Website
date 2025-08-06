@@ -215,9 +215,10 @@ Supports multiple languages:
 2. **Evidence Logging** - Text, audio, photos, files
 3. **AI Assistant** - POSH-compliant complaint generation
 4. **SOS Chatbot** - AI-powered emotional support and guidance
-5. **Emergency Features** - Quick access to help
-6. **Resource Library** - Legal guides and templates
-7. **Multi-language Support** - Internationalization ready
+5. **Emergency Location Sharing** - Instant location sharing via WhatsApp
+6. **Emergency Features** - Quick access to help
+7. **Resource Library** - Legal guides and templates
+8. **Multi-language Support** - Internationalization ready
 
 ### Privacy & Security
 - Client-side encryption
@@ -312,6 +313,24 @@ The platform includes an AI-powered SOS chatbot that provides:
 - **Confidential Conversations**: Private, secure chat interface
 
 For detailed setup instructions, see [CHATBOT_SETUP.md](./CHATBOT_SETUP.md)
+
+## 🚨 Emergency Features
+
+### Emergency Location Sharing
+- **One-Click Alert**: Red emergency button for immediate location sharing
+- **WhatsApp Integration**: Automatically opens WhatsApp with location and emergency message
+- **Contact Management**: Set up emergency contacts for instant sharing
+- **Fallback Support**: Works even without location access
+
+### Emergency Support Section
+- **Direct Helpline Access**: One-click calling to police, women's helpline, and emergency services
+- **Visual Emergency Guide**: Clear emergency procedures and contact information
+- **24/7 Availability**: Always accessible from the homepage
+
+### Safety Features
+- **Location Privacy**: Location only shared when emergency button is pressed
+- **Contact Security**: Emergency contacts stored locally on user's device
+- **Immediate Response**: Instant sharing with pre-configured emergency contacts
 
 ## 🔄 Version History
 
