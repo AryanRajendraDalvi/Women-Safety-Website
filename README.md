@@ -1,4 +1,4 @@
-# SafeSpace - Women Safety Platform
+# NirbhayaSetu - Women Safety Platform
 
 A privacy-first digital platform for women's workplace safety in India, built with Next.js frontend and Node.js/Express backend with MongoDB integration.
 
