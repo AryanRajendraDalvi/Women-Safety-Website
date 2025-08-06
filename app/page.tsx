@@ -64,7 +64,7 @@ export default function LandingPage() {
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div className="flex items-center space-x-2">
             <Shield className="h-8 w-8 text-purple-600" />
-            <span className="text-2xl font-bold text-gray-900">SafeSpace</span>
+            <span className="text-2xl font-bold text-gray-900">NirbhayaSetu</span>
           </div>
           <div className="flex space-x-4">
             {user ? (

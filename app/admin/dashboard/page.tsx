@@ -85,9 +85,14 @@ export default function AdminDashboardPage() {
       
       const response = await apiService.getAdminDashboardOverview()
 
-      if (response.data) {
-        setMetrics(response.data.metrics)
-        setRecentCases(response.data.recentCases)
+      if (
+        response.data &&
+        typeof response.data === "object" &&
+        "metrics" in response.data &&
+        "recentCases" in response.data
+      ) {
+        setMetrics((response.data as { metrics: DashboardMetrics }).metrics)
+        setRecentCases((response.data as { recentCases: Case[] }).recentCases)
       } else {
         console.error('Dashboard error:', response.error)
         if (response.error?.includes('401') || response.error?.includes('Invalid token')) {
@@ -202,7 +207,7 @@ export default function AdminDashboardPage() {
           <div className="flex items-center space-x-4">
             <Link href="/" className="flex items-center space-x-2">
               <Shield className="h-8 w-8 text-blue-600" />
-              <span className="text-2xl font-bold text-gray-900">SafeSpace Admin</span>
+              <span className="text-2xl font-bold text-gray-900">NirbhayaSetu Admin</span>
             </Link>
             <Badge variant="outline" className="text-blue-600 border-blue-600">
               {getRoleDisplayName(admin.role)}

@@ -61,7 +61,7 @@ export default function AdminLoginPage() {
             <HomeButton />
             <Link href="/" className="flex items-center space-x-2">
               <Shield className="h-8 w-8 text-blue-600" />
-              <span className="text-2xl font-bold text-gray-900">SafeSpace</span>
+              <span className="text-2xl font-bold text-gray-900">NirbhayaSetu</span>
             </Link>
             <div className="w-20"></div> {/* Spacer for centering */}
           </div>
